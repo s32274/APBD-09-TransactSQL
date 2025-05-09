@@ -3,10 +3,10 @@ using Microsoft.Data.SqlClient;
 
 namespace Tutorial9.Services;
 
-public class DbService : IDbService
+public class ProductService : IProductService
 {
     private readonly IConfiguration _configuration;
-    public DbService(IConfiguration configuration)
+    public ProductService(IConfiguration configuration)
     {
         _configuration = configuration;
     }
