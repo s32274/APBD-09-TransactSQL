@@ -5,15 +5,15 @@ namespace Tutorial9.Model;
 public class WarehouseProductDto
 {
     [Required]
-    public int IdProduct;
+    public int IdProduct { get; set; }
     
     [Required]
-    public int IdWarehouse;
+    public int IdWarehouse { get; set; }
     
     [Required]
     [Range(1, int.MaxValue, ErrorMessage = "Amount of added product must exceed 0")]
-    public int Amount;
+    public int Amount { get; set; }
     
     [Required]
-    public DateTime CreatedAt;
+    public DateTime CreatedAt { get; set; }
 }
