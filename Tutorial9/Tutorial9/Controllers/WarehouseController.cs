@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Tutorial9.Exceptions;
+using Tutorial9.Model;
 using Tutorial9.Services;
 
 namespace Tutorial9.Controllers;
@@ -12,26 +13,25 @@ public class WarehouseController : ControllerBase
 
     public WarehouseController(IDbService dbService)
     {
-        this._dbService = dbService;
+        _dbService = dbService;
     }
 
     [HttpPut]
-    public async Task AddProductToWarehouseAsync
-    (
-        int idProduct, int idWarehouse, int amount, CancellationToken cancellationToken
-    )
+    public async Task<IActionResult> AddProductToWarehouseAsync(
+        [FromBody] WarehouseProductDto dto, 
+        CancellationToken cancellationToken)
     {
         try
         {
-            await _dbService.AddProductToWarehouseAsync(
-                idProduct, idWarehouse, amount, cancellationToken
+            var idProductWarehouse = await _dbService.AddProductToWarehouseAsync(
+                    dto.IdProduct, dto.IdWarehouse, dto.Amount, dto.CreatedAt, cancellationToken
             );
 
-
+            return Ok(idProductWarehouse);
         }
         catch (NotFoundException e)
         {
-            
+            return NotFound(e.Message);
         }
     }
 }

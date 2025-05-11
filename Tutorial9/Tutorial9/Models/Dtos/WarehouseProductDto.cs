@@ -2,18 +2,17 @@
 
 namespace Tutorial9.Model;
 
-public class ProductDto
+public class WarehouseProductDto
 {
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "IdProduct musi być większe od 0")]
     public int IdProduct;
     
     [Required]
     public int IdWarehouse;
     
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "Liczba dodanych produktów musi być większa od 0")]
-    public int amount;
+    [Range(1, int.MaxValue, ErrorMessage = "Amount of added product must exceed 0")]
+    public int Amount;
     
     [Required]
     public DateTime CreatedAt;

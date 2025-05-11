@@ -6,6 +6,7 @@ namespace Tutorial9.Services;
 public class DbService : IDbService
 {
     private readonly String _connectionString;
+    
     public DbService()
     {
         this._connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=APBD;Integrated Security=True;";
@@ -13,7 +14,7 @@ public class DbService : IDbService
     
     public async Task<int> AddProductToWarehouseAsync
     (
-        int idProduct, int idWarehouse, int amount, CancellationToken cancellationToken
+        int idProduct, int idWarehouse, int amount, DateTime createdAt, CancellationToken cancellationToken
     )
     {
         if (amount < 1)
@@ -62,7 +63,7 @@ public class DbService : IDbService
             
             command.Parameters.AddWithValue("@IdProduct", idProduct);
             command.Parameters.AddWithValue("@Amount", amount);
-            command.Parameters.AddWithValue("@CreatedAt", DateTime.Now);
+            command.Parameters.AddWithValue("@CreatedAt", createdAt);
 
             var orderData = await command.ExecuteScalarAsync();
             if (orderData is null)
@@ -124,8 +125,8 @@ public class DbService : IDbService
 
             await command.ExecuteNonQueryAsync();
             
-            // 6. W wyniku operacji zwracamy wartość klucza głównego wygenerowanego
-            // dla rekordu wstawionego do tabeli Product_Warehouse.
+            // 6. "W wyniku operacji zwracamy wartość klucza głównego wygenerowanego
+            // dla rekordu wstawionego do tabeli Product_Warehouse."
             command.Parameters.Clear();
             command.CommandText = "SELECT SCOPE_IDENTITY()";
             
